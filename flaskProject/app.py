@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, render_template,request
 
 app = Flask(__name__)
 
@@ -8,5 +8,35 @@ def hello_world():  # put application's code here
     return 'Hello World!'
 
 
+# display the us1.1 html
+@app.route('/us1')
+def us1():
+    return render_template('US1.1.html')
+
+
+# display the us1.4 html
+@app.route('/us4')
+def us4():
+    return render_template('US1.4.html')
+
+
+# US 1.1 REST API
+@app.route('/uv_index', methods=['GET'])
+# You can get front-end data and write back-end logic here
+def uv_index():
+    location = request.args.get("location")
+    print(location)
+    return location
+
+
+# US 1.4 REST API
+@app.route('/calculate_sunscreen', methods=['GET'])
+# You can get front-end data and write back-end logic here
+def calculate_sunscreen():
+    location = request.args.get("location")
+    print(location)
+    return location
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
