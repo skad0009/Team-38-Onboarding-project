@@ -33,9 +33,19 @@ def uv_index():
 @app.route('/calculate_sunscreen', methods=['GET'])
 # You can get front-end data and write back-end logic here
 def calculate_sunscreen():
-    location = request.args.get("location")
-    print(location)
-    return location
+    # input 1
+    value1 = request.args.get("input1")
+
+    # input 2
+    value2 = request.args.get("input2")
+
+    # input 3
+    value3 = request.args.get("input3")
+
+    # input 4
+    value4 = request.args.get("input4")
+    print(value1, value2, value3, value4)
+    return f"result: {value1}, {value2}, {value3}, {value4}"
 
 
 if __name__ == '__main__':

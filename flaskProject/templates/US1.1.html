@@ -2,13 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Select Location</title>
+    <title>UV-index</title>
+    <!-- Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <form method="get" action="/uv_index">
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" required>
-        <input type="submit" value="submit">
-    </form>
-</body>
-</html>
+    <!-- Image part -->
+    <div class="container-fluid">
+        <img src="/images/uv-us-1.jpg" class="img-fluid" alt="Responsive image">
+    </div>
+
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <!-- Navigation links -->
+    </nav>
+
+    <!-- Search -->
+    <div class="container mt-3">
+        <form method="get" action="/uv_index" class="input-group mb-3">
+            <input type="text" id="location" name="location" required class="form-control" placeholder="Please enter location">
+            <div class="input-group-append">
+                <input type="submit" value="Search" class="btn btn-outline-secondary">
+            </div>
+        </form>
+
+        <!-- UV Index Display -->
+        <p>UV INDEX is: <span id="uvIndexValue">Value</span></p>
+    </div>
+
+    <!-- D3.js Canvas -->
+    <div id="d3-canvas" class="container-fluid">
+        <!-- D3.js visualization -->
+    </div>
