@@ -19,7 +19,7 @@ def get_location(city_name):
     :return: Dictionary with 'lat' and 'lng' keys
     """
     # Open the CSV file
-    with open("database/location.csv", "r") as file:
+    with open("database/1.1/location.csv", "r") as file:
         # Create a CSV reader object
         reader = csv.DictReader(file)
 
