@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 import csv
 import ast
+import tensorflow as tf
 
 ## SOURCE:
 ## Melbourne data: https://data.gov.au/dataset/ds-dga-fb836013-f300-4f92-aa1e-fb5014aea40e/details?q=Ultraviolet%20Radiation%20Index
@@ -63,11 +64,11 @@ def get_uv_index(city_name):
         print("Error fetching UV index:", response.status_code)
         return None
     
-def get_forecasted_uv(city_name):
+def get_forecasted_uv():
     """
     Call parquet file to forecast hourly UV index for the current day
-    :param city_name: Name of the city
-    :return: json file with forecasted UV index
+    :param: None
+    :return: JSON file with forecasted UV index
     """
     pass
 
