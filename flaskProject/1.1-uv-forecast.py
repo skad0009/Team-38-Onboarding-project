@@ -27,7 +27,7 @@ def forecast_uv(debug = False):
 
     ## debugging: write forecast to file
     if debug:
-        with open('forecast.json', 'w') as f:
+        with open('test/forecast.json', 'w') as f:
             json.dump(forecast, f)
 
     return forecast
@@ -110,4 +110,4 @@ def process_JSON(features, y_pred):
     return forecast
 
 if __name__ == '__main__':
-    forecast_uv()
+    forecast_uv(debug=True)
