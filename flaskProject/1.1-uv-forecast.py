@@ -29,5 +29,13 @@ def get_features():
     # List of hours to forecast
     hours = list(range(0,24))
 
-    # Create dataframe to store model features
-    features = pd.DataFrame(columns=['city','hour','day','month','year'])
+    # Create empty list to store features
+    features = []
+
+    # Loop through each city and hour for features
+    for city in cities:
+        for hour in hours:
+            features.append([city, curr_day, curr_month, curr_year, hour])
+
+    # Create features dataframe
+    features_df = pd.DataFrame(features, columns=['city', 'Day', 'Month', 'Year', 'Hour'])
