@@ -9,7 +9,7 @@ import json
 
 def forecast_uv(debug = False):
     """
-    Call parquet file to forecast hourly UV index for the current day
+    Call keras file to forecast hourly UV index for the current day
     :param: debug: boolean to write forecast to file
     :return: JSON of forecasted UV-index in the format of {city: city_name, hour: hour, uvIndex: uv_index}
     """
@@ -21,6 +21,10 @@ def forecast_uv(debug = False):
 
     # Make predictions
     y_pred = model.predict(X)
+
+    # Adjust predictions to be between 0 and 11
+    y_pred = np.round(y_pred, 0)
+    y_pred = np.clip(y_pred, 0, 11)
 
     # Format predictions into JSON
     forecast = process_JSON(features, y_pred)
@@ -124,8 +128,8 @@ def process_JSON(features, y_pred):
     # Loop through each city and hour for predictions
     for i in range(len(features)):
         city = features['city'][i]
-        hour = features['Hour'][i]
-        uvIndex = y_pred[i]
+        hour = str(features['Hour'][i])
+        uvIndex = str(y_pred[i])[1:-2] # Remove brackets and comma
         forecast.append({'city': city, 'hour': hour, 'uvIndex': uvIndex})
 
     return forecast
