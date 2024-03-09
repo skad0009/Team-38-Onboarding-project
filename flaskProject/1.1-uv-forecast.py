@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 
-def get_forecasted_uv():
+def forecast_uv():
     """
     Call parquet file to forecast hourly UV index for the current day
     :param: None
@@ -63,3 +63,8 @@ def get_features():
 
     # Drop the original columns except year
     processed_data = processed_data.drop(columns=['Day','Month','Hour'])
+
+    # Reshape data
+    X = reshape_data(processed_data.values)
+
+    return X
