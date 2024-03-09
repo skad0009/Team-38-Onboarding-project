@@ -3,6 +3,7 @@ import os
 import datetime as dt
 import pandas as pd
 import numpy as np
+from sklearn.preprocessing import MinMaxScaler
 
 def get_forecasted_uv():
     """
@@ -11,6 +12,15 @@ def get_forecasted_uv():
     :return: JSON file with forecasted UV index
     """
     pass
+
+def reshape_data(data, timesteps=24):
+  """
+  Reshape data into 3D array for model prediction
+  """
+  X_reshaped = []
+  for i in range(len(data) - timesteps + 1):
+    X_reshaped.append(data[i:i + timesteps])
+  return np.array(X_reshaped)
 
 def get_features():
     """
@@ -39,3 +49,17 @@ def get_features():
 
     # Create features dataframe
     features_df = pd.DataFrame(features, columns=['city', 'Day', 'Month', 'Year', 'Hour'])
+
+    # One-hot encode city
+    # Pre-process city names into dummy binary variables
+    processed_data = pd.get_dummies(features_df)
+    for city in cities:
+        processed_data[f'city_{city}'] = processed_data[f'city_{city}'].astype(int)
+
+    # Normalize features
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    scaled_data = scaler.fit_transform(processed_data[['Day','Month','Year','Hour']])
+    processed_data[['Scaled_Day','Scaled_Month','Scaled_Year','Scaled_Hour']] = pd.DataFrame(scaled_data, columns=['Day','Month','Year','Hour'])
+
+    # Drop the original columns except year
+    processed_data = processed_data.drop(columns=['Day','Month','Hour'])
