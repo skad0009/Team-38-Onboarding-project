@@ -1,17 +1,37 @@
-import tensorflow as tf
 import os
 import datetime as dt
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
+import tensorflow as tf
+from tensorflow import keras
+import json
 
-def forecast_uv():
+def forecast_uv(debug = False):
     """
     Call parquet file to forecast hourly UV index for the current day
-    :param: None
-    :return: JSON file with forecasted UV index
+    :param: debug: boolean to write forecast to file
+    :return: JSON of forecasted UV-index in the format of {city: city_name, hour: hour, uvIndex: uv_index}
     """
-    pass
+    # Get both processed and raw features
+    X, features = get_features()
+
+    # Load model
+    model = tf.keras.models.load_model('database/1.1/uv-predict.keras')
+
+    # Make predictions
+    y_pred = model.predict(X)
+
+    # Format predictions into JSON
+    forecast = process_JSON(features, y_pred)
+
+    ## debugging: write forecast to file
+    if debug:
+        with open('forecast.json', 'w') as f:
+            json.dump(forecast, f)
+
+    return forecast
+
 
 def reshape_data(data, timesteps=24):
   """
@@ -26,7 +46,8 @@ def get_features():
     """
     Pre-process features into array X for model prediction
     :param: None
-    :return: Numpy array X with features for model prediction
+    :return X: Numpy array X with features for model prediction
+    :return features_df: Dataframe of features - to be processed into JSON
     """
     # Extract current time
     curr_day = dt.datetime.now().day
@@ -67,4 +88,26 @@ def get_features():
     # Reshape data
     X = reshape_data(processed_data.values)
 
-    return X
+    return X, features_df
+
+def process_JSON(features, y_pred):
+    """
+    Process features and predictions into JSON
+    :param features: Dataframe of features
+    :param y_pred: Numpy array of predictions
+    :return: JSON of forecasted UV-index in the format of {city: city_name, hour: hour, uvIndex: uv_index}
+    """
+    # Create empty list to store JSON
+    forecast = []
+
+    # Loop through each city and hour for predictions
+    for i in range(len(features)):
+        city = features['city'][i]
+        hour = features['Hour'][i]
+        uvIndex = y_pred[i][0]
+        forecast.append({'city': city, 'hour': hour, 'uvIndex': uvIndex})
+
+    return forecast
+
+if __name__ == '__main__':
+    forecast_uv()
