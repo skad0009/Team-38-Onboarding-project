@@ -7,14 +7,14 @@ import tensorflow as tf
 from tensorflow import keras
 import json
 
-def forecast_uv(debug = False):
+def forecast_uv(day=None, month=None, year=None, debug = False):
     """
     Call keras file to forecast hourly UV index for the current day
     :param: debug: boolean to write forecast to file
     :return: JSON of forecasted UV-index in the format of {city: city_name, hour: hour, uvIndex: uv_index}
     """
     # Get both processed and raw features
-    X, features = get_features()
+    X, features = get_features(day, month, year)
 
     # Load model
     model = tf.keras.models.load_model('database/1.1/uv-predict.h5')
@@ -63,7 +63,7 @@ def get_features(day=None, month=None, year=None):
     :return X: Numpy array X with features for model prediction
     :return features_df: Dataframe of features - to be processed into JSON
     """
-    
+
     # If values are None, extract current time
     if day is None:
         curr_day = dt.datetime.now().day
