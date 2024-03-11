@@ -1,0 +1,104 @@
+   body {
+            margin: 0;
+        }
+   body::before {
+  content: ""; /* 伪元素内容来显示 */
+  position: fixed; /* 固定位置 */
+  top: 0; /* 从顶部开始 */
+  left: 0; /* 从左侧开始 */
+  width: 100%; /* 宽度为100% */
+  height: 100%; /* 高度为100% */
+  background-image: url('../images/uv-us-1.jpg'); /* 设置背景图片 */
+  background-size: cover; /* 覆盖整个页面 */
+  opacity: 0.3; /* 设置透明度 */
+  z-index: -1; /* 确保背景在内容之后 */
+}
+
+        .sub-header {
+            height: 100px;
+        }
+
+        .container {
+            width: 1300px;
+            margin: 0 auto;
+        }
+
+        .container-intro
+        {
+            width: 800px; /* 将图片的宽度设置为200像素 */
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .sub-header .ht {
+            height: 100px;
+        }
+
+
+        .sub-header .logo {
+            width: 234px;
+            float: left;
+
+        }
+
+        .sub-header .logo a {
+            margin-top: 22px;
+            display: inline-block
+        }
+
+        .sub-header .logo a img {
+            height: 56px;
+            width: 56px;
+        }
+
+        .sub-header {
+
+        }
+
+        .menu-list{
+            float: right;
+
+            line-height: 100px;
+        }
+
+        .sub-header .menu-list a{
+            display: inline-block;
+            padding: 0 10px;
+            color: #333;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .sub-header .menu-list a:hover{
+            color: #ff6700;
+        }
+
+
+        .carousel-item {
+        max-height: 500px; /* 设置轮播图中所有图片的最大高度 */
+  overflow: hidden; /* 隐藏超出容器大小的部分 */
+}
+
+.carousel-item img {
+  width: 100%; /* 使图片宽度自适应容器宽度 */
+  height: auto; /* 将保持图片的宽高比 */
+  object-fit: cover; /* 确保图片覆盖整个容器，可能会裁切图片的部分内容 */
+}
+
+#d3-canvas {
+    display: flex;
+    justify-content: center;
+}
+
+        /* 以上部分是导航栏*/
+
+   .tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: #f0f0f0;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    pointer-events: auto;
+}

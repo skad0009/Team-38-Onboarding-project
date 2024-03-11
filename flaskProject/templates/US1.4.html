@@ -2,39 +2,54 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!-- Bootstrap CSS -->
+
+    <!-- Bootstrap CSS 保持不变 -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<!-- 修改本地CSS引用 -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <title>Calculate uv</title>
 </head>
 <body>
- <!-- Image part -->
-    <div class="container-fluid">
-        <img src="/images" class="img-fluid" alt="Responsive image">
-    </div>
 
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <!-- Navigation links-->
-    </nav>
+
+ <div class="sub-header">
+    <div class="container">
+        <div class="ht logo">
+            <!-- a，行内标签；默认设置高度、边距无效。 -> 块级 & 行内+块级 -->
+            <a>
+                <img src="{{ url_for('static', filename='images/windmill.png') }}" alt="">
+            </a>
+        </div>
+        <div class="ht menu-list">
+            <a href="{{ url_for('us1') }}">Home</a>
+            <a href="{{ url_for('us4') }}">Calculate</a>
+            <a href="{{ url_for('us1') }}">Research</a>
+            <a href="{{ url_for('us1') }}">About us</a>
+        </div>
+        <div class="clear:both;"></div>
+    </div>
+</div>
+
+
+
 <div class="container">
     <h2>Calculation Form</h2>
     <!-- Form-->
-    <form action="/calculate_sunscreen" method="get" id="calculation_Form">
+    <form action="{{ url_for('calculate_sunscreen') }}" method="get" id="calculation_Form">
         <div class="form-group">
-            <label for="input1">Option 1:</label>
+            <label for="input1">Option 1 (Headwear): 1 - Hat, 2 - No Hat, 3 - Bucket Hat</label>
             <input type="number" class="form-control" id="input1" name="input1" required>
         </div>
         <div class="form-group">
-            <label for="input2">Option 2:</label>
+            <label for="input2">Option 2 (Topwear): 1 - Full Sleeve Top, 2 - Half Sleeve Top, 3 - Singlet, 4 - Bikini Top</label>
             <input type="number" class="form-control" id="input2" name="input2" required>
         </div>
         <div class="form-group">
-            <label for="input3">Option 3:</label>
+            <label for="input3">Option 3 (Bottomwear): 1 - Pants, 2 - Half Pants, 3 - Short Skirt, 4 - Swimsuit</label>
             <input type="number" class="form-control" id="input3" name="input3" required>
         </div>
         <div class="form-group">
-            <label for="input4">Option 4:</label>
+            <label for="input4">Option 4 (UV Index): Enter the current UV index</label>
             <input type="number" class="form-control" id="input4" name="input4" required>
         </div>
         <button type="submit" class="btn btn-primary" value="Calculate">Calculate</button>
@@ -45,6 +60,7 @@
     </div>
 </div>
 
+<script src="{{ url_for('static', filename='js/US4.js') }}"></script>
 </body>
 </html>
 

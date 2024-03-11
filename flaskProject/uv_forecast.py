@@ -17,7 +17,7 @@ def forecast_uv(debug = False):
     X, features = get_features()
 
     # Load model
-    model = tf.keras.models.load_model('database/1.1/uv-predict.keras')
+    model = tf.keras.models.load_model('database/1.1/uv-predict.h5')
 
     # Make predictions
     y_pred = model.predict(X)
@@ -111,6 +111,7 @@ def get_features():
     # print(f"Size of reshaped data: {X.shape}")
 
     return X, features_df
+
 
 def process_JSON(features, y_pred):
     """
