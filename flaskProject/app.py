@@ -100,10 +100,40 @@ def calculate_sunscreen():
     uv_index = request.args.get("input4")
 
     clothing_map = {
-        "1": {"Head": "Hat", "Torso": "Full Sleeve Top", "Lower Body": "Pants"},
-        "2": {"Head": "No Hat", "Torso": "Half Sleeve Top", "Lower Body": "Half Pants"},
-        "3": {"Head": "Bucket Hat", "Torso": "Singlet", "Lower Body": "Short Skirt"},
-    }
+    "1": {"Head": "No Hat", "Torso": "Full Sleeve Top", "Lower Body": "Pants"},
+    "2": {"Head": "No Hat", "Torso": "Full Sleeve Top", "Lower Body": "Half Pants"},
+    "3": {"Head": "No Hat", "Torso": "Full Sleeve Top", "Lower Body": "Short Skirt"},
+    "4": {"Head": "No Hat", "Torso": "Full Sleeve Top", "Lower Body": "Swimsuit"},
+    "5": {"Head": "No Hat", "Torso": "Half Sleeve Top", "Lower Body": "Pants"},
+    "6": {"Head": "No Hat", "Torso": "Half Sleeve Top", "Lower Body": "Half Pants"},
+    "7": {"Head": "No Hat", "Torso": "Half Sleeve Top", "Lower Body": "Short Skirt"},
+    "8": {"Head": "No Hat", "Torso": "Half Sleeve Top", "Lower Body": "Swimsuit"},
+    "9": {"Head": "No Hat", "Torso": "Singlet", "Lower Body": "Pants"},
+    "10": {"Head": "No Hat", "Torso": "Singlet", "Lower Body": "Half Pants"},
+    "11": {"Head": "No Hat", "Torso": "Singlet", "Lower Body": "Short Skirt"},
+    "12": {"Head": "No Hat", "Torso": "Singlet", "Lower Body": "Swimsuit"},
+    "13": {"Head": "No Hat", "Torso": "Swimsuit", "Lower Body": "Pants"},
+    "14": {"Head": "No Hat", "Torso": "Swimsuit", "Lower Body": "Half Pants"},
+    "15": {"Head": "No Hat", "Torso": "Swimsuit", "Lower Body": "Short Skirt"},
+    "16": {"Head": "No Hat", "Torso": "Swimsuit", "Lower Body": "Swimsuit"},
+    "17": {"Head": "Hat", "Torso": "Full Sleeve Top", "Lower Body": "Pants"},
+    "18": {"Head": "Hat", "Torso": "Full Sleeve Top", "Lower Body": "Half Pants"},
+    "19": {"Head": "Hat", "Torso": "Full Sleeve Top", "Lower Body": "Short Skirt"},
+    "20": {"Head": "Hat", "Torso": "Full Sleeve Top", "Lower Body": "Swimsuit"},
+    "21": {"Head": "Hat", "Torso": "Half Sleeve Top", "Lower Body": "Pants"},
+    "22": {"Head": "Hat", "Torso": "Half Sleeve Top", "Lower Body": "Half Pants"},
+    "23": {"Head": "Hat", "Torso": "Half Sleeve Top", "Lower Body": "Short Skirt"},
+    "24": {"Head": "Hat", "Torso": "Half Sleeve Top", "Lower Body": "Swimsuit"},
+    "25": {"Head": "Hat", "Torso": "Singlet", "Lower Body": "Pants"},
+    "26": {"Head": "Hat", "Torso": "Singlet", "Lower Body": "Half Pants"},
+    "27": {"Head": "Hat", "Torso": "Singlet", "Lower Body": "Short Skirt"},
+    "28": {"Head": "Hat", "Torso": "Singlet", "Lower Body": "Swimsuit"},
+    "29": {"Head": "Hat", "Torso": "Swimsuit", "Lower Body": "Pants"},
+    "30": {"Head": "Hat", "Torso": "Swimsuit", "Lower Body": "Half Pants"},
+    "31": {"Head": "Hat", "Torso": "Swimsuit", "Lower Body": "Short Skirt"},
+    "32": {"Head": "Hat", "Torso": "Swimsuit", "Lower Body": "Swimsuit"}
+}
+
 
     selections = {
         "Head": clothing_map.get(headwear, {}).get("Head", "No Hat"),
