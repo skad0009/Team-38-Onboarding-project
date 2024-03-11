@@ -56,17 +56,29 @@ def reshape_data(data, timesteps=24):
             X_reshaped.append(data[i:i + timesteps])
     return np.array(X_reshaped)
 
-def get_features():
+def get_features(day=None, month=None, year=None):
     """
     Pre-process features into array X for model prediction
     :param: None
     :return X: Numpy array X with features for model prediction
     :return features_df: Dataframe of features - to be processed into JSON
     """
-    # Extract current time
-    curr_day = dt.datetime.now().day
-    curr_month = dt.datetime.now().month
-    curr_year = dt.datetime.now().year
+    
+    # If values are None, extract current time
+    if day is None:
+        curr_day = dt.datetime.now().day
+    else:
+        curr_day = day
+
+    if month is None:
+        curr_month = dt.datetime.now().month
+    else:
+        curr_month = month
+
+    if year is None:
+        curr_year = dt.datetime.now().year
+    else:
+        curr_year = year
 
     # List of cities to forecast
     cities = ['Adelaide','Brisbane','Canberra','Melbourne','Perth','Sydney']
