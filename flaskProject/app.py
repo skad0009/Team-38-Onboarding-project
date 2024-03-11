@@ -58,20 +58,40 @@ def key(selections):
 
 
 def sunscreen_advice(selections, uv_index):
-    advice_combinations = {
-        "Hat-Full Sleeve Top-Pants": "Apply 1 teaspoon of sunscreen every two hours.",
-        "Hat-Half Sleeve Top-Pants": "Apply 1.5 teaspoons of sunscreen every two hours.",
-        "Hat-Singlet-Pants": "Apply 2 teaspoons of sunscreen every two hours.",
-        "Hat-Bikini Top-Pants": "Apply 3 teaspoons of sunscreen every two hours.",
-        "Hat-Full Sleeve Top-Half Pants": "Apply 2 teaspoons of sunscreen every two hours.",
-        "Hat-Full Sleeve Top-Short Skirt": "Apply 2.5 teaspoons of sunscreen every two hours.",
-        "No Hat-Full Sleeve Top-Pants": "Apply 1 teaspoon of sunscreen every two hours.",
-        "No Hat-Half Sleeve Top-Pants": "Apply 1.5 teaspoons of sunscreen every two hours.",
-        "No Hat-Singlet-Pants": "Apply 2 teaspoons of sunscreen every two hours.",
-        "No Hat-Bikini Top-Pants": "Apply 3 teaspoons of sunscreen every two hours.",
-        "No Hat-Full Sleeve Top-Half Pants": "Apply 2 teaspoons of sunscreen every two hours.",
-        "No Hat-Full Sleeve Top-Short Skirt": "Apply 2.5 teaspoons of sunscreen every two hours.",
-        "No Hat-Swimsuit-Swimsuit": "Apply 4 teaspoons of sunscreen every two hours."
+
+     advice_combinations = {
+        "No Hat-Full Sleeve Top-Pants": "Apply 1 teaspoon (4 ml) of sunscreen every two hours.",
+        "No Hat-Full Sleeve Top-Half Pants": "Apply 2.5 teaspoons (11 ml)  of sunscreen every two hours.",
+        "No Hat-Full Sleeve Top-Short Skirt": "Apply 3  teaspoons (14 ml) of sunscreen every two hours.",
+        "No Hat-Full Sleeve Top-Swimsuit": "Apply 4 teaspoons  (20 ml) of sunscreen every two hours.",
+        "No Hat-Half Sleeve Top-Pants": "Apply 1.5 teaspoons (6 ml) of sunscreen every two hours.",
+        "No Hat-Half Sleeve Top-Half Pants": "Apply 2.5 teaspoons (11 ml)  of sunscreen every two hours.",
+        "No Hat-Half Sleeve Top-Short Skirt": "Apply 3 teaspoons (14 ml) of sunscreen every two hours.",
+        "No Hat-Half Sleeve Top-Swimsuit": "Apply 5 teaspoons (23 ml) of sunscreen every two hours.",
+        "No Hat-Singlet-Pants": "Apply 2 teaspoons (10 ml) of sunscreen every two hours.",
+        "No Hat-Singlet-Half Pants": "Apply 3 teaspoons (14 ml) of sunscreen every two hours.",,
+        "No Hat-Singlet-Short Skirt": "Apply 4 teaspoons  (20 ml) of sunscreen every two hours.",,
+        "No Hat-Singlet-Swimsuit": "Apply 5 teaspoons (23 ml) of sunscreen every two hours.",,
+        "No Hat-Swimsuit-Pants": "Apply 3 teaspoons (14 ml) of sunscreen every two hours.",
+        "No Hat-Swimsuit-Half Pants": "Apply 4 teaspoons  (20 ml) of sunscreen every two hours.",,
+        "No Hat-Swimsuit-Short Skirt": "Apply 5 teaspoons (23 ml)  of sunscreen every two hours.",,
+        "No Hat-Swimsuit-Swimsuit": "Apply 6 teaspoons (30 ml) of sunscreen every two hours.",
+        "Hat-Full Sleeve Top-Pants": "Apply 1 teaspoon (4 ml) of sunscreen every two hours.",
+        "Hat-Full Sleeve Top-Half Pants": "Apply 2 teaspoons (10 ml)  of sunscreen every two hours.",
+        "Hat-Full Sleeve Top-Short Skirt": "Apply 2.5 teaspoons (11 ml) of sunscreen every two hours.",
+        "Hat-Full Sleeve Top-Swimsuit": "Apply 4 teaspoons (20 ml) of sunscreen every two hours.",
+        "Hat-Half Sleeve Top-Pants": "Apply 1.5 teaspoons (6 ml) of sunscreen every two hours.",
+        "Hat-Half Sleeve Top-Half Pants": "Apply 2.5 teaspoons (11 ml) of sunscreen every two hours.",
+        "Hat-Half Sleeve Top-Short Skirt": "Apply 3 teaspoons (14 ml) of sunscreen every two hours.",
+        "Hat-Half Sleeve Top-Swimsuit": "Apply 4.5 teaspoons (21 ml) of sunscreen every two hours.",
+        "Hat-Singlet-Pants": "Apply 2 teaspoons (10 ml) of sunscreen every two hours.",
+        "Hat-Singlet-Half Pants": "Apply 3 teaspoons (14 ml) of sunscreen every two hours.",
+        "Hat-Singlet-Short Skirt": "Apply 3.5 teaspoons (7ml) of sunscreen every two hours.",
+        "Hat-Singlet-Swimsuit": "Apply 5 teaspoons (23 ml) of sunscreen every two hours.",
+        "Hat-Swimsuit-Pants": "Apply 1 teaspoon (4 ml) of sunscreen every two hours.",
+        "Hat-Swimsuit-Half Pants": "Apply 2 teaspoons (10 ml) of sunscreen every two hours.",
+        "Hat-Swimsuit-Short Skirt": "Apply 2.5 teaspoons (11 ml) of sunscreen every two hours.",
+        "Hat-Swimsuit-Swimsuit": "Apply 4 teaspoons (20 ml) of sunscreen every two hours.",
     }
 
     advice_key = key(selections)
