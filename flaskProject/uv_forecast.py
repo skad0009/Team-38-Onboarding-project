@@ -147,6 +147,16 @@ def process_JSON(features, y_pred):
 
     return forecast
 
+def load_forecast():
+    """
+    Load forecast from file
+    :param: None
+    :return: JSON of forecasted UV-index in the format of {city: city_name, hour: hour, uvIndex: uv_index}
+    """
+    with open('database/1.1/forecast.json', 'r') as f:
+        forecast = json.load(f)
+    return forecast
+
 if __name__ == '__main__':
     # Forecast UV index for 12 March 2024
     forecast_uv(day=12, month=3, year=2024, debug=True)
