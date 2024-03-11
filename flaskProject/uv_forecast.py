@@ -31,7 +31,7 @@ def forecast_uv(day=None, month=None, year=None, debug = False):
 
     ## debugging: write forecast to file
     if debug:
-        with open('test/forecast.json', 'w') as f:
+        with open('database/1.1/forecast.json', 'w') as f:
             json.dump(forecast, f)
 
     return forecast
@@ -148,4 +148,5 @@ def process_JSON(features, y_pred):
     return forecast
 
 if __name__ == '__main__':
-    forecast_uv(debug=True)
+    # Forecast UV index for 12 March 2024
+    forecast_uv(day=12, month=3, year=2024, debug=True)
