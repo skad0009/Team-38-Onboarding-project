@@ -2,6 +2,8 @@ import requests
 import pandas as pd
 import csv
 import ast
+import datetime as dt
+import time
 
 ## SOURCE:
 ## Melbourne data: https://data.gov.au/dataset/ds-dga-fb836013-f300-4f92-aa1e-fb5014aea40e/details?q=Ultraviolet%20Radiation%20Index
@@ -54,11 +56,13 @@ def get_uv_index(city_name):
     url = f"https://api.openuv.io/api/v1/uv?lat={location['lat']}&lng={location['lng']}"
     headers = {'x-access-token': api_key}
     response = requests.get(url, headers=headers)
+    # datetime in unix format
+    curr_timestamp = time.mktime(dt.datetime.now().timetuple())
     # If request succeeded, parse the JSON response
     if response.status_code == 200:
         uv_data = response.json()
-        uv_index = uv_data['result']['uv']
-        return uv_index
+        uv_index = round(uv_data['result']['uv'],2)
+        return uv_index, curr_timestamp
     else:
         print("Error fetching UV index:", response.status_code)
         return None
