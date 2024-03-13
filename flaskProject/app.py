@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, request, jsonify
+from flask import Flask, request, render_template, jsonify
 from uv_locator import get_uv_index, get_location
 from uv_forecast import forecast_uv
 import pandas as pd
