@@ -1,15 +1,31 @@
-from flask import Flask, request, render_template, request, jsonify
+from flask import Flask, request, render_template, jsonify, redirect, flash
 from uv_locator import get_uv_index, get_location
 from uv_forecast import forecast_uv
-import pandas as pd
-import csv
-import ast
+import datetime as dt
+
 app = Flask(__name__)
+app.secret_key = '123456'
+
+# 假设的正确密码
+CORRECT_PASSWORD = '123456'
 
 
 @app.route('/')
 def hello_world():  # put application's code here
-    return 'Hello World!'
+    return render_template('login.html')
+
+
+@app.route('/verify_password', methods=['POST'])
+def verify_password():
+    password = request.form['password']
+    # verify password
+    if password == CORRECT_PASSWORD:
+        # If the password is correct, redirect to the US1.1 page
+        return redirect('/us1')
+    else:
+        # If the password is incorrect, display the error message and reload the login page
+        flash('Wrong password, please re-enter！')
+        return redirect('/')
 
 
 # display the us1.1 html
@@ -30,24 +46,25 @@ def uv_index():
     location = request.args.get("location")
     if location:
         try:
-            uv_index = get_uv_index(location)
+            uv_index, curr_timestamp = get_uv_index(location)
             if uv_index is not None:
-                # 如果成功获取到UV指数，返回JSON响应
-                return jsonify({"location": location, "uv_index": uv_index}), 200
+                # Convert UNIX timestamp to readable date time format
+                readable_time = dt.datetime.fromtimestamp(curr_timestamp).strftime('%Y-%m-%d %H:%M:%S')
+                # If the UV index is successfully obtained, return a JSON response
+                return jsonify({"location": location, "uv_index": uv_index, "timestamp": readable_time}), 200
             else:
-                # 如果没有获取到UV指数，返回错误消息
+                # If the UV index is not obtained, return an error message
                 return jsonify({"error": "UV index data not available"}), 404
         except Exception as e:
-            # 处理任何可能发生的异常
+            # Handle any exceptions that may occur
             return jsonify({"error": str(e)}), 500
     else:
-        # 如果没有提供location参数
+        # If no location parameter is provided
         return jsonify({"error": "No location provided"}), 400
 
 
 @app.route('/get_uv_forecast', methods=['GET'])
 def get_uv_forecast():
-    # 假设forecast_uv()返回所需的JSON数据
     forecast_data = forecast_uv(debug = False)
     return jsonify(forecast_data)
 
@@ -58,7 +75,6 @@ def key(selections):
 
 
 def sunscreen_advice(selections, uv_index):
-
     advice_combinations = {
         "No Hat-Full Sleeve Top-Pants": "Apply 1 teaspoon (4 ml) of sunscreen every two hours.",
         "No Hat-Full Sleeve Top-Half Pants": "Apply 2.5 teaspoons (11 ml)  of sunscreen every two hours.",
@@ -91,7 +107,7 @@ def sunscreen_advice(selections, uv_index):
         "Hat-Swimsuit-Pants": "Apply 1 teaspoon (4 ml) of sunscreen every two hours.",
         "Hat-Swimsuit-Half Pants": "Apply 2 teaspoons (10 ml) of sunscreen every two hours.",
         "Hat-Swimsuit-Short Skirt": "Apply 2.5 teaspoons (11 ml) of sunscreen every two hours.",
-        "Hat-Swimsuit-Swimsuit": "Apply 4 teaspoons (20 ml) of sunscreen every two hours."
+        "Hat-Swimsuit-Swimsuit": "Apply 4 teaspoons (20 ml) of sunscreen every two hours."
     }
 
     advice_key = key(selections)
@@ -118,48 +134,16 @@ def calculate_sunscreen():
 
     # input 4
     uv_index = request.args.get("input4")
+    headwear_options = {"1": "No Hat", "2": "Hat"}
+    topwear_options = {"1": "Full Sleeve Top", "2": "Half Sleeve Top", "3": "Singlet", "4": "Swimsuit"}
+    bottomwear_options = {"1": "Pants", "2": "Half Pants", "3": "Short Skirt", "4": "Swimsuit"}
 
-    clothing_map = {
-    "1": {"Head": "No Hat", "Torso": "Full Sleeve Top", "Lower Body": "Pants"},
-    "2": {"Head": "No Hat", "Torso": "Full Sleeve Top", "Lower Body": "Half Pants"},
-    "3": {"Head": "No Hat", "Torso": "Full Sleeve Top", "Lower Body": "Short Skirt"},
-    "4": {"Head": "No Hat", "Torso": "Full Sleeve Top", "Lower Body": "Swimsuit"},
-    "5": {"Head": "No Hat", "Torso": "Half Sleeve Top", "Lower Body": "Pants"},
-    "6": {"Head": "No Hat", "Torso": "Half Sleeve Top", "Lower Body": "Half Pants"},
-    "7": {"Head": "No Hat", "Torso": "Half Sleeve Top", "Lower Body": "Short Skirt"},
-    "8": {"Head": "No Hat", "Torso": "Half Sleeve Top", "Lower Body": "Swimsuit"},
-    "9": {"Head": "No Hat", "Torso": "Singlet", "Lower Body": "Pants"},
-    "10": {"Head": "No Hat", "Torso": "Singlet", "Lower Body": "Half Pants"},
-    "11": {"Head": "No Hat", "Torso": "Singlet", "Lower Body": "Short Skirt"},
-    "12": {"Head": "No Hat", "Torso": "Singlet", "Lower Body": "Swimsuit"},
-    "13": {"Head": "No Hat", "Torso": "Swimsuit", "Lower Body": "Pants"},
-    "14": {"Head": "No Hat", "Torso": "Swimsuit", "Lower Body": "Half Pants"},
-    "15": {"Head": "No Hat", "Torso": "Swimsuit", "Lower Body": "Short Skirt"},
-    "16": {"Head": "No Hat", "Torso": "Swimsuit", "Lower Body": "Swimsuit"},
-    "17": {"Head": "Hat", "Torso": "Full Sleeve Top", "Lower Body": "Pants"},
-    "18": {"Head": "Hat", "Torso": "Full Sleeve Top", "Lower Body": "Half Pants"},
-    "19": {"Head": "Hat", "Torso": "Full Sleeve Top", "Lower Body": "Short Skirt"},
-    "20": {"Head": "Hat", "Torso": "Full Sleeve Top", "Lower Body": "Swimsuit"},
-    "21": {"Head": "Hat", "Torso": "Half Sleeve Top", "Lower Body": "Pants"},
-    "22": {"Head": "Hat", "Torso": "Half Sleeve Top", "Lower Body": "Half Pants"},
-    "23": {"Head": "Hat", "Torso": "Half Sleeve Top", "Lower Body": "Short Skirt"},
-    "24": {"Head": "Hat", "Torso": "Half Sleeve Top", "Lower Body": "Swimsuit"},
-    "25": {"Head": "Hat", "Torso": "Singlet", "Lower Body": "Pants"},
-    "26": {"Head": "Hat", "Torso": "Singlet", "Lower Body": "Half Pants"},
-    "27": {"Head": "Hat", "Torso": "Singlet", "Lower Body": "Short Skirt"},
-    "28": {"Head": "Hat", "Torso": "Singlet", "Lower Body": "Swimsuit"},
-    "29": {"Head": "Hat", "Torso": "Swimsuit", "Lower Body": "Pants"},
-    "30": {"Head": "Hat", "Torso": "Swimsuit", "Lower Body": "Half Pants"},
-    "31": {"Head": "Hat", "Torso": "Swimsuit", "Lower Body": "Short Skirt"},
-    "32": {"Head": "Hat", "Torso": "Swimsuit", "Lower Body": "Swimsuit"}
-}
-
-
+    # Map the inputs to their descriptive strings
     selections = {
-        "Head": clothing_map.get(headwear, {}).get("Head", "No Hat"),
-        "Torso": clothing_map.get(topwear, {}).get("Torso", "Singlet"),
-        "Lower Body": clothing_map.get(bottomwear, {}).get("Lower Body", "Pants")
-    }
+        "Head": headwear_options.get(headwear, "No Hat"),
+        "Torso": topwear_options.get(topwear, "Singlet"),
+        "Lower Body": bottomwear_options.get(bottomwear,"Pants")
+}
 
     print("Mapped Selections:", selections)
     print("Inputs:", headwear, topwear, bottomwear, uv_index)

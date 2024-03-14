@@ -1,98 +1,166 @@
-   body {
-            margin: 0;
-        }
-   body::before {
-  content: ""; /* 伪元素内容来显示 */
-  position: fixed; /* 固定位置 */
-  top: 0; /* 从顶部开始 */
-  left: 0; /* 从左侧开始 */
-  width: 100%; /* 宽度为100% */
-  height: 100%; /* 高度为100% */
-  background-image: url('../images/uv-us-1.jpg'); /* 设置背景图片 */
-  background-size: cover; /* 覆盖整个页面 */
-  opacity: 0.3; /* 设置透明度 */
-  z-index: -1; /* 确保背景在内容之后 */
+/*us1.1 part*/
+
+
+body {
+    margin: 0;
 }
 
-        .sub-header {
-            height: 100px;
-        }
-
-        .container {
-            width: 1300px;
-            margin: 0 auto;
-        }
-
-        .container-intro
-        {
-            width: 800px; /* 将图片的宽度设置为200像素 */
-            height: auto;
-            margin: 0 auto;
-        }
-
-        .sub-header .ht {
-            height: 100px;
-        }
-
-
-        .sub-header .logo {
-            width: 234px;
-            float: left;
-
-        }
-
-        .sub-header .logo a {
-            margin-top: 22px;
-            display: inline-block
-        }
-
-        .sub-header .logo a img {
-            height: 56px;
-            width: 56px;
-        }
-
-        .sub-header {
-
-        }
-
-        .menu-list{
-            float: right;
-
-            line-height: 100px;
-        }
-
-        .sub-header .menu-list a{
-            display: inline-block;
-            padding: 0 10px;
-            color: #333;
-            font-size: 16px;
-            text-decoration: none;
-        }
-
-        .sub-header .menu-list a:hover{
-            color: #ff6700;
-        }
-
-
-        .carousel-item {
-        max-height: 500px; /* 设置轮播图中所有图片的最大高度 */
-  overflow: hidden; /* 隐藏超出容器大小的部分 */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/uv-us-1.jpg');
+    background-size: cover;
+    opacity: 0.3;
+    z-index: -1;
 }
 
-.carousel-item img {
-  width: 100%; /* 使图片宽度自适应容器宽度 */
-  height: auto; /* 将保持图片的宽高比 */
-  object-fit: cover; /* 确保图片覆盖整个容器，可能会裁切图片的部分内容 */
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #000;
 }
 
-#d3-canvas {
-    display: flex;
-    justify-content: center;
+
+
+/*nav part*/
+/* Style for navbar */
+
+
+/* Set the same max-width for both the navbar and the container */
+.navbar .container {
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
 }
 
-        /* 以上部分是导航栏*/
+.container {
+    max-width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+}
 
-   .tooltip {
+.navbar {
+  background-color: #f8f9fa; /* Light grey background */
+  padding: 10px 0; /* Top and bottom padding */
+}
+
+.navbar .navbar-brand img {
+  height: 100px; /* Adjust the size of the logo */
+}
+
+.navbar-nav .nav-link {
+  font-size: 2rem; /* Larger font size for nav links */
+  margin-right: 20px; /* Space between nav links */
+}
+
+/* Website name next to the logo */
+.navbar-brand .website-name {
+  font-size: 2rem; /* Adjust the font size as needed */
+  font-weight: bold; /* Optional: add bold font style */
+  margin-left: 10px; /* Space between logo and name */
+  vertical-align: middle; /* Align with the logo */
+  color: #555; /* Adjust the color as needed */
+}
+
+/* Style for mobile nav toggler */
+.navbar .navbar-toggler {
+  border: none;
+}
+
+/* Style for nav collapsed on mobile */
+.navbar .collapse {
+  justify-content: flex-end; /* Align the nav to the right on mobile */
+}
+
+@media (max-width: 991px) {
+  /* Styles for mobile */
+  .navbar-nav .nav-link {
+    padding: 10px; /* Larger touch targets for mobile */
+    margin-right: 0; /* Remove right margin on mobile */
+  }
+}
+
+
+/*left side part*/
+.container {
+    padding:50px;
+    width:100%;
+    padding-left: 15px; /* Maintain padding on the very left */
+}
+
+.carousel {
+    height: 520px; /* Increase the height of the carousel */
+}
+
+.carousel .carousel-inner .carousel-item {
+    height: 700px; /* Increase the height of the carousel items */
+}
+
+.input-group {
+    margin-top: 2rem; /* Add space between carousel and search box */
+}
+
+.input-group .form-control {
+    min-height: 3rem; /* Increase the height of the select box */
+}
+
+.input-group .btn {
+    min-height: 3rem; /* Increase the height of the button to match select box */
+}
+
+/* General text content */
+p {
+    font-size: 1.25rem; /* This sets the font size to a larger readable size */
+}
+
+/* Form elements */
+.form-control, .btn {
+    font-size: 1.25rem; /* Larger font size for form inputs and buttons */
+    padding: .5rem 1rem; /* Adjust padding to make elements taller */
+}
+
+#UVIndex, #UVIndexInfo {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #F8F8FF;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+
+
+.title-line-chart
+{
+    text-align: center;
+}
+
+/* Use media query for larger screens */
+@media (min-width: 992px) {
+    .container {
+        padding-left: 0; /* Remove padding on the left for larger screens */
+    }
+}
+
+
+
+/*right part*/
+
+
+.d3-canvas {
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    margin-bottom: 1rem;
+}
+
+/* Tooltip CSS */
+.tooltip {
     position: absolute;
     text-align: center;
     padding: 2px;
@@ -102,3 +170,34 @@
     border-radius: 8px;
     pointer-events: auto;
 }
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+    .sub-header .menu-list,
+    .sub-header .logo {
+        float: none;
+        text-align: center;
+    }
+
+    .sub-header .menu-list {
+        line-height: normal;
+    }
+
+    .sub-header .menu-list a {
+        padding: 10px 0; /* Adjust spacing */
+        display: block; /* Stack the links */
+    }
+}
+
+.result-area {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#uv-trend-1, #uv-trend-2 {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+

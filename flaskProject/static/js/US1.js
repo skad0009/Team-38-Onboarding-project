@@ -1,34 +1,94 @@
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("UV_Index").addEventListener("submit", function(event) {
-        event.preventDefault(); // 阻止表单默认提交行为
-        const input1 = document.getElementById("location").value;
-        const requestURL = `/uv_index?location=${input1}`;
 
-        // 发起AJAX请求
+//User current time
+function displayCurrentTime() {
+  // Create a new Date object
+  const now = new Date();
+  // Format the time as desired - here it's in a 24-hour format with minutes and seconds
+  const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+  // Select the element where you want to display the time
+  const timeDisplay = document.getElementById('timeDisplay');
+  // Set the text content of the selected element to the formatted time
+  timeDisplay.textContent = formattedTime;
+}
+// Call displayCurrentTime every second to update the clock
+setInterval(displayCurrentTime, 1000);
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    function getUserCity() {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=us`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('userCity').textContent = data.city || 'unknown city';
+                })
+                .catch(error => {
+                    console.error('Positioning error:', error);
+                    document.getElementById('userCity').textContent = 'Unable to get current city';
+                });
+            }, function(error) {
+                document.getElementById('userCity').textContent = error.message || 'Unable to obtain location permission';
+            });
+        } else {
+            document.getElementById('userCity').textContent = 'The browser does not support geolocation';
+        }
+    }
+
+    // Get and display the user's current city
+    getUserCity();
+
+    document.getElementById("searchForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent form default submission behavior
+
+        // Get the selected position from the form
+        const selectedLocation = document.getElementById("location").value;
+
+        // Build the correct request URL
+        const requestURL = `/uv_index?location=${selectedLocation}`;
+
+        // Initiate AJAX request
         fetch(requestURL)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok.'); // 抛出错误，被后面的catch捕获
+                    throw new Error('Network response was not ok.'); // If the network response is not ok, throw an error
                 }
-                return response.json();
+                return response.json(); // Parse the response in JSON format
             })
             .then(data => {
-                // 更新页面上的结果
+                //Update the page based on the returned data
+                const uvIndexElement = document.getElementById("UVIndex");
+                const uvInfoElement = document.getElementById("UVIndexInfo");
                 if(data.uv_index !== undefined) {
-                    document.getElementById("UVIndex").textContent = data.uv_index;
+                    uvIndexElement.textContent = data.uv_index;
+                    if(data.uv_index >= 0 && data.uv_index <= 2) {
+                        uvInfoElement.textContent = "Minimal risk for harm. Wear sunglasses on bright days.";
+                    } else if(data.uv_index > 2 && data.uv_index <= 5) {
+                        uvInfoElement.textContent = "Seek shade during midday hours, cover up and wear sunscreen.";
+                    } else if(data.uv_index > 5 && data.uv_index <= 7) {
+                        uvInfoElement.textContent = "Stay in shade near midday when the sun is strongest.";
+                    } else if(data.uv_index > 7 && data.uv_index <= 10) {
+                        uvInfoElement.textContent = "Take extra precautions. Unprotected skin will be damaged.";
+                    } else if(data.uv_index > 10) {
+                        uvInfoElement.textContent = "Avoid the sun between 11AM and 3PM.";
+                    } else {
+                        uvInfoElement.textContent = "";
+                        // If the UV index value is not within the expected range, no information is displayed
+                    }
                 } else {
-                    // 处理数据返回成功，但结构不符合预期
-                    document.getElementById("UVIndex").textContent = "Please enter a correct location in English.";
+                    uvIndexElement.textContent = "No UV index data available for the selected location.";
+                    uvInfoElement.textContent = "";
+                    //Do not display information when there is no UV index data
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                // 处理请求失败的情况
-                document.getElementById("UVIndex").textContent = "There was an error processing your request. Please try again.";
+                // If the request fails, notify the user
+                document.getElementById("UVIndex").textContent = "Error fetching UV index data. Please try again later.";
+                document.getElementById("UVIndexInfo").textContent = ""; //Do not display information when an error occurs
             });
     });
 });
-
 
 
 //fetch  predict data
@@ -40,54 +100,76 @@ fetch('/get_uv_forecast')
     .catch(error => console.error('Error fetching UV forecast data:', error));
 
 function visualizeData(data) {
-    const svg = d3.select("#line-chart"),
-        margin = { top: 20, right: 20, bottom: 30, left: 50 },
-        width = +svg.attr("width") - margin.left - margin.right,
-        height = +svg.attr("height") - margin.top - margin.bottom,
+   const svg = d3.select("#line-chart"),
+        margin = { top: 20, right: 20, bottom: 30, left: 50 }, // Adjust left margin for axis labels if needed
+        width = svg.node().getBoundingClientRect().width - margin.left - margin.right,
+        height = svg.node().getBoundingClientRect().height - margin.top - margin.bottom,
         g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // 定义x和y轴的比例尺
+    // Define the scale of the x and y axes
     const x = d3.scaleLinear()
-    .domain([0, 24]) // 设置x轴的数据范围
-    .range([0, width]); // 设置x轴在画布上的像素范围
+    .domain([0, 24]) //Set the data range of the x-axis
+    .range([0, width]); //Set the pixel range of the x-axis on the canvas
 
     const y = d3.scaleLinear()
-    .domain([0, 11]) // 设置y轴的数据范围
-    .range([height, 0]); // 设置y轴在画布上的像素范围
+    .domain([0, 11]) //Set the data range of the y-axis
+    .range([height, 0]); //Set the pixel range of the y-axis on the canvas
 
 
-    // 定义颜色比例尺
-    const color = d3.scaleOrdinal(d3.schemeCategory10); // 使用内置的颜色方案，共10种颜色
+    //Define color scale
+    const color = d3.scaleOrdinal(d3.schemeCategory10);
+    // Use the built-in color scheme, a total of 10 colors
 
-    // 处理数据，分城市组织
+    // Process data and organize by city
     const cities = Array.from(new Set(data.map(d => d.city)));
     const data_city = cities.map(city => {
+        const filteredData = data.filter(d => d.city === city);
         return {
             city: city,
-            values: data.filter(d => d.city === city).map(d => ({ hour: +d.hour, uvIndex: +d.uvIndex }))
+            values: filteredData.map(d => ({
+                hour: +d.hour, // Ensure conversion to number via unary plus sign
+                uvIndex: +d.uvIndex
+            }))
         };
     });
 
-    // 添加x和y轴
+    console.log(data_city);
+
+    //Add x and y axes
     g.append("g")
         .attr("transform", `translate(0, ${height})`)
         .call(d3.axisBottom(x));
     g.append("g")
         .call(d3.axisLeft(y));
 
+    //Add titles for the x and y axes
+g.append("text")
+  .attr("text-anchor", "end")
+  .attr("x", width + margin.left -4)
+  .attr("y", height + margin.bottom ) // Adjust the y-position to align with the bottom of the x-axis
+  .text("Hour (h)");
 
 
-    // 定义线的生成器
+g.append("text")
+  .attr("text-anchor", "end")
+
+  .attr("y", margin.left - 20) // Adjust the y-position to align with the left side
+  .attr("x", -margin.top + 100) // Adjust the x-position to align with the top of the y-axis
+  .text("UV Index");
+
+
+
+    //define line generator
     const line = d3.line()
         .x(d => x(d.hour))
         .y(d => y(d.uvIndex));
 
-    // 添加工具提示
+   //Add tooltip
     const tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-    // 绘制每个城市的UV指数曲线
+    // Draw the UV index curve of each city
     const cityLines = g.selectAll(".city")
         .data(data_city)
         .enter().append("g")
@@ -100,50 +182,51 @@ function visualizeData(data) {
     .attr("fill", "none")
     .attr("stroke-width", 3);
 
-    // 为每个数据点创建圆圈并添加工具提示的交互
-cityLines.selectAll(".point")
+   // Create circles and add tooltip interactions for each data point
+    cityLines.selectAll(".point")
     .data(d => d.values)
     .enter().append("circle")
     .attr("class", "point")
     .attr("cx", d => x(d.hour))
     .attr("cy", d => y(d.uvIndex))
-    .attr("r", 5) // 点的大小
+    .attr("r", 4)
     .style("fill", d => color(d.city))
 
- .on("mouseover", function(event, d) {
-    tooltip.transition()
-        .duration(200)
+
+    .on("mouseover", function(event, d) {
+        tooltip.transition()
+        .duration(1000)
         .style("opacity", .9);
-    tooltip.html(`Time: ${d.hour}:00<br/>UV Index: ${d.uvIndex}`)
-        .style("left", (event.pageX + 10) + "px")  // 加10个像素，防止遮挡
-        .style("top", (event.pageY + 10) + "px");  // 同上
-})
-.on("mouseout", function(event, d) {
-    tooltip.transition()
+        tooltip.html(`Time: ${d.hour}:00<br/>UV Index: ${d.uvIndex}`)
+        .style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY + 10) + "px");
+    })
+    .on("mouseout", function(event, d) {
+        tooltip.transition()
         .duration(500)
         .style("opacity", 0);
 });
 
-    // 选中所有的线条，并为它们添加鼠标悬停事件
+   // Select all lines and add mouseover events to them
 cityLines.selectAll(".line")
     .on("mouseover", function() {
-        // 除了当前悬停的线条，其他所有线条透明度降低
+        // Reduce the transparency of all lines except the currently hovered line
         d3.selectAll(".line")
             .style("opacity", 0.2);
-        // 当前悬停的线条保持不变
+        //The currently hovered line remains unchanged
         d3.select(this)
             .style("opacity", 1)
-            .style("stroke-width", "6px"); // 可选，增加线条宽度以增强视觉效果
+            .style("stroke-width", "6px");
     })
     .on("mouseout", function() {
-        // 鼠标移开后恢复所有线条的透明度和宽度
+        //Restore the transparency and width of all lines after the mouse is moved away
         d3.selectAll(".line")
             .style("opacity", 1)
             .style("stroke-width", "3px");
     });
 
 
-    // 添加图例
+    //Add legend
     const legend = svg.selectAll(".legend")
         .data(cities)
         .enter().append("g")

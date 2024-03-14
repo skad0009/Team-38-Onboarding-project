@@ -3,80 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <title>UV-index</title>
-
     <!-- Bootstrap-->
     <link rel="stylesheet" href="{{ url_for('static', filename='plugins/bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/css/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
-
-
-  <div class="sub-header">
-    <div class="container">
-        <div class="ht logo">
-            <!-- a，行内标签；默认设置高度、边距无效。 -> 块级 & 行内+块级 -->
-            <a>
-                <img src="{{ url_for('static', filename='images/windmill.png') }}" alt="">
-            </a>
-        </div>
-        <div class="ht menu-list">
-            <a href="{{ url_for('us1') }}">Home</a>
-            <a href="{{ url_for('us4') }}">Calculate</a>
-            <a href="{{ url_for('us1') }}">Research</a>
-            <a href="{{ url_for('us1') }}">About us</a>
-        </div>
-        <div class="clear:both;"></div>
-    </div>
-</div>
-
-
-<!--display-->
-  <div class = "display-part">
-      <div class ="container-intro">
-     <div id="carouselExampleFade" class="carousel slide carousel-fade">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="{{ url_for('static', filename='images/UV_protection1.png') }}" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="{{ url_for('static', filename='images/UV_protection2.png') }}" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="{{ url_for('static', filename='images/test.jpg') }}" class="d-block w-100" alt="...">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <!-- Logo -->
+    <a class="navbar-brand" href="#">
+      <img src="{{ url_for('static', filename='images/windmill.png') }}" alt="Logo" style="height: 100px;">
+        <span class="website-name">Sunbird</span>
+    </a>
+    <!-- Toggler for mobile view -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ url_for('us1') }}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('us4') }}">Calculate</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('us1') }}">About us</a>
+        </li>
+      </ul>
     </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-         </div>
-</div>
-</div>
+</nav>
 
 
-    <!-- Search -->
-    <div class="container mt-3">
-        <form method="get" action="{{ url_for('uv_index') }}" class="input-group mb-3" id="UV_Index">
-            <input type="text" id="location" name="location" required class="form-control" placeholder="Please enter location">
-            <div class="input-group-append">
-                <input type="submit" value="Search" class="btn btn-outline-secondary">
+{#Lower left part#}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Left Column -->
+        <div class="col-md-6">
+            <!-- 1. Carousel -->
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <a href ="https://www.cancercouncil.com.au/news/5-steps-to-applying-sunscreen-correctly/#:~:text=It%E2%80%99s%20easy%20if%20you%20follow%20these%205%20steps:,on%20a%20small%20section%20of%20skin%20first.">
+                            <img src="{{ url_for('static', filename='images/uv1.png') }}" class="d-block w-100" alt="..." href = "5 steps to applying sunscreen correctly | Cancer Council NSW"></a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href = "https://www.cancer.org.au/cancer-information/causes-and-prevention/sun-safety/be-sunsmart/sun-protective-clothing">
+                         <img src="{{ url_for('static', filename='images/uv2.png') }}" class="d-block w-100" alt="..."></a>
+                    </div>
+                    <div class="carousel-item">
+                         <img src="{{ url_for('static', filename='images/uv3.png') }}" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-        </form>
 
-        <!-- UV Index Display -->
-        <p>UV INDEX is: <span id="UVIndex">Value</span></p>
-    </div>
+            <!-- Above the search box -->
+           <!-- Current Time and Selected City Display -->
+        <div>
+            <span>current time：</span>
+            <span id="timeDisplay" class="time-display"></span>
+        </div>
+        <div>
+            <span>current city：</span>
+            <span id="userCity" class="user-city"></span>
+        </div>
 
-    <!-- D3.js Canvas -->
-    <div id="d3-canvas" class="container-fluid">
-        <svg width="1200" height="600" id="line-chart"></svg><!-- D3.js visualization -->
+
+
+            <!-- 2. Search box -->
+            <div class="input-group mb-3">
+                <div>Please input the uv_Index value of the city</div>
+                <form id="searchForm" class="input-group">
+                    <select id="location" name="location" class="form-control">
+                        <option value="">Select a location</option>
+                        <option value="Melbourne">Melbourne</option>
+                        <option value="Adelaide">Adelaide</option>
+                        <option value="Brisbane">Brisbane</option>
+                        <option value="Canberra">Canberra</option>
+                        <option value="Perth">Perth</option>
+                        <option value="Sydney">Sydney</option>
+                    </select>
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </div>
+
+            <!-- 3. UV Index Result -->
+            <div>
+                <p>UV Index is: <span id="UVIndex">Value</span></p>
+                <p id="UVIndexInfo">UV index information</p>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Rest of the container and row from the left part -->
+    <!-- Right Column -->
+    <div class="col-md-6">
+        <!-- Text Description -->
+        <div class="mb-3">
+            <h2>UV Index Trends</h2>
+            <p>We use a machine learning model to predict the value of uv_index</p>
+        </div>
+
+        <br>
+        <br>
+
+
+        <div class="mb-3">
+            <h2 class ="title-line-chart">24-Hour UV Index Forecast for Major Australian Cities Today</h2>
+        <br>
+            <br>
+        </div>
+
+
+        <!-- D3.js Canvas -->
+        <div class="d3-canvas" style="width: 100%; height: 500px;">
+            <svg width="100%" height="100%" id="line-chart"></svg> <!-- Adjust the height as needed -->
+        </div>
     </div>
+</div>
+    </div>
+</div>
+
+
 </body>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="{{ url_for('static', filename='js/US1.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</html>
