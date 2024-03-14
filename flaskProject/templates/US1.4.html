@@ -1,49 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-<title>Calculate uv</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Calculate uv</title>
 </head>
 <body>
 
 
- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <!-- Logo -->
-    <a class="navbar-brand" href="#">
-      <img src="{{ url_for('static', filename='images/windmill.png') }}" alt="Logo" style="height: 100px;">
-        <span class="website-name">Sunbird</span>
-    </a>
-    <!-- Toggler for mobile view -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <!-- Navbar links -->
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ url_for('us1') }}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('us4') }}">Calculate</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('us1') }}">About us</a>
-        </li>
-      </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='images/windmill.png') }}" alt="Logo" style="height: 100px;">
+            <span class="website-name">Sunbird</span>
+        </a>
+        <!-- Toggler for mobile view -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('us1') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('us4') }}">Calculate</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('us1') }}">About us</a>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
 
 
-
- <br>
- <br>
- <br>
- <br>
+<br>
+<br>
+<br>
+<br>
 
 <div class="container">
     <div class="row">
@@ -87,40 +87,40 @@
         </div>
 
 
+        <div class="col-md-6">
+            <div class="result-area">
+                <h3>Result: <span id="result"></span></h3>
+            </div>
 
-
-            <div class="col-md-6">
-    <div class="result-area">
-        <h3>Result: <span id="result"></span></h3>
-    </div>
-
-    <!-- UV Index Trends Images in a single row -->
-    <!-- Additional header row for the column-->
-    <!-- Zouyuan can you help me align this to the rest of the elements please?-->
-    <div class="row before mt-3">
-        <h4>Learn more:</h4>
-    </div>
-    <div class="row mt-3">
-        <div class="col-sm-6 pr-2">
-            <h5>Sunsmart</h5>
-            <!-- Image with hyperlink -->
-            <a href="https://www.sunsmart.com.au/" target="_blank">
-                <img src="{{ url_for('static', filename='images/sun_uv1.png') }}" alt="UV Index Trend 1" style="width: 100%; height: 250px;">
-            </a>
+            <!-- UV Index Trends Images in a single row -->
+            <!-- Additional header row for the column-->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h4>Learn more:</h4>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-6 pr-2">
+                    <h5>Sunsmart</h5>
+                    <!-- Image with hyperlink -->
+                    <a href="https://www.sunsmart.com.au/" target="_blank">
+                        <img src="{{ url_for('static', filename='images/sun_uv1.png') }}" alt="UV Index Trend 1"
+                             style="width: 100%; height: 250px;">
+                    </a>
+                </div>
+                <div class="col-sm-6 pl-2">
+                    <h5>What is UV-index?</h5>
+                    <!-- Image with hyperlink -->
+                    <a href="https://www.cancer.org.au/blog/health-check-what-does-the-uv-index-mean" target="_blank">
+                        <img src="{{ url_for('static', filename='images/sun_uv2.png') }}" alt="UV Index Trend 2"
+                             style="width: 100%; height: 250px;">
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-6 pl-2">
-            <h5>What is UV-index?</h5>
-            <!-- Image with hyperlink -->
-            <a href="https://www.cancer.org.au/blog/health-check-what-does-the-uv-index-mean" target="_blank">
-                <img src="{{ url_for('static', filename='images/sun_uv2.png') }}" alt="UV Index Trend 2" style="width: 100%; height: 250px;">
-            </a>
-        </div>
-    </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-<script src="{{ url_for('static', filename='js/US4.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+        <script src="{{ url_for('static', filename='js/US4.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
